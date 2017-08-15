@@ -22,6 +22,7 @@ The goals / steps of this project are the following:
 [image3]: ./examples/bin.png "Biniarized image"
 [image4]: ./examples/warp.png "Warped image image"
 [image5]: ./examples/lane_line.png "Lane line detection"
+[image6]: ./examples/pipeline_example.png "Lane line detection"
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -92,12 +93,11 @@ right_fit = np.polyfit(righty, rightx, 2)
 ```
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
-
+In in lines 216 through 248 in my code in `lane_line_lib.py` I calculate the curvature of the road as seen in udacity example.
+ 
 
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
-
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
@@ -107,7 +107,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./processed_project_video.mp4)
 
 ---
 
@@ -115,4 +115,4 @@ Here's a [link to my video result](./project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+At first I had problems binarizing the image it was very hard to find the right parameters. A lot of time was spent to refactor the code in a good structure.

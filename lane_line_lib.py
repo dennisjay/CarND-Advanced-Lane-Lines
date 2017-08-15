@@ -6,10 +6,41 @@ class CameraCalibration:
     def __init__(self):
         self.calib_mtx = np.load('camera_cal/calib_mtx.npy')
         self.calib_dist = np.load('camera_cal/calib_dist.npy')
+        self.objpoints = []
+        self.imgpoints =[]
+        # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
+        self.objp = np.zeros((6 * 9, 3), np.float32)
+        self.objp[:, :2] = np.mgrid[0:9, 0:6].T.reshape(-1, 2)
+
+    def add_calib_image(self, img):
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # Find the chessboard corners
+        ret, corners = cv2.findChessboardCorners(gray, (9, 6), None)
+
+        # If found, add object points, image points
+        if ret == True:
+            self.objpoints.append(self.objp)
+            self.imgpoints.append(corners)
+
 
     def undistort(self, img):
         #undistort an image, use calib_mtx and calib_dist
         return cv2.undistort(img, self.calib_mtx, self.calib_dist, None, self.calib_mtx)
+
+
+    def calc_params(self):
+        # Do camera calibration given object points and image points
+        _, self.calib_mtx, self.calib_dist, _, _ = cv2.calibrateCamera(self.objpoints, self.imgpoints, img_size, None, None)
+
+        dst = cv2.undistort(img, mtx, dist, None, mtx)
+        cv2.imwrite('calibration_wide/test_undist.jpg', dst)
+
+        # Save the camera calibration result for later use (we won't worry about rvecs / tvecs)
+        np.save('camera_cal/calib_mtx', mtx)
+        np.save('camera_cal/calib_dist', dist)
+
+
 
 class Binarizer:
     def __init__(self, gray_thresh=(20, 255), s_thresh=(170, 255), l_thresh=(30, 255), sobel_kernel=3):
@@ -209,6 +240,7 @@ class LaneDetector:
                         np.absolute(2 * left_fit_cr[0])
         right_curverad = ((1 + (2 * right_fit_cr[0] * y_eval * meters_per_pixel_y_dir + right_fit_cr[1]) ** 2) ** 1.5) / \
                          np.absolute(2 * right_fit_cr[0])
+
 
         # Next, we can lane deviation
         calculated_center = (left_intercept + right_intercept) / 2.0
