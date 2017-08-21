@@ -115,4 +115,14 @@ Here's a [link to my video result](./processed_project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-At first I had problems binarizing the image it was very hard to find the right parameters. A lot of time was spent to refactor the code in a good structure.
+At first I had problems binarizing the image it was very hard to find the right parameters. 
+A lot of time was spent to refactor the code in a good structure. After the review I fixed the curverad calculation. 
+
+I recognized that the most sensitive part in the code is the binarization of the image. The algorithm will fail most likely 
+at situations where the brightness changes because of shadows or old lane lines on the road. One proposal to make this more robust
+is to add morphologyEx filter at the beginning of the pipeline. Another idea could be to use a CLAHE (Contrast Limited Adaptive Histogram Equalization) algorithm. 
+
+Another weakness of this algorithm would be when there is a construction site or intersection
+lane lines which are crossing or doubled can lead to that only one random of these lines is detected, for such situations this 
+algorithm sould be improved.
+ 
