@@ -124,5 +124,5 @@ is to add morphologyEx filter at the beginning of the pipeline. Another idea cou
 
 Another weakness of this algorithm would be when there is a construction site or intersection
 lane lines which are crossing or doubled can lead to that only one random of these lines is detected, for such situations this 
-algorithm sould be improved.
+algorithm should be improved.
  
