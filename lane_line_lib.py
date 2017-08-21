@@ -225,7 +225,7 @@ class LaneDetector:
 
         # average highway lane line width in US is about 3.7m
         meters_per_pixel_x_dir = 3.7 / road_width_in_pixels
-        meters_per_pixel_y_dir = 30 / road_width_in_pixels
+        meters_per_pixel_y_dir = (3.0*7.0) / road_width_in_pixels
 
         # Recalculate road curvature in X-Y space
         ploty = np.linspace(0, 719, num=720)
